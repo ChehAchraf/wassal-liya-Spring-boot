@@ -27,7 +27,7 @@ public class Tour {
 
     private LocalDate date;
     @Column(name="total_distance" , nullable = false)
-    private String totalDistance;
+    private Double totalDistance;
     
     @OneToMany( mappedBy="tour" , cascade= CascadeType.ALL , orphanRemoval=true )
     private List<Delivery> deliveries;
