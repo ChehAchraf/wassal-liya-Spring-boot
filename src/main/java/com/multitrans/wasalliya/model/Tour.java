@@ -37,4 +37,8 @@ public class Tour {
     @JoinColumn(name = "vehicale_id")
     @JsonManagedReference
     private Vehicale vehicale;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "warehouse_id", nullable = false)
+    private Warehouse warehouse;
 }
