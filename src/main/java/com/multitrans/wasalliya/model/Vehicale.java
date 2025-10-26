@@ -45,7 +45,7 @@ public class Vehicale {
     @Column( name = "max_deliveries" , nullable= false )
     private int maxDeliveries;
 
-    @OneToMany(mappedBy = "vehicale", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "vehicale", fetch = FetchType.EAGER)
     @JsonBackReference
     private List<Tour> tours;
 }

@@ -46,4 +46,21 @@ public class WarehouseMapper {
         }
         return warehouse;
     }
+
+    public void updateFromDTO (WarehouseDTO dto, Warehouse entityToUpdate){
+        entityToUpdate.setLatitude(
+                dto.latitude() != null ? dto.latitude() : entityToUpdate.getLatitude()
+        );
+        entityToUpdate.setLongitude(
+                dto.longitude() != null ? dto.longitude() : entityToUpdate.getLongitude()
+        );
+        entityToUpdate.setOpeningHours(
+                dto.openingHours() != null ? dto.openingHours() : entityToUpdate.getOpeningHours()
+        );
+        if (dto.tourIds() != null) {
+
+            List<Tour> newTours = tourRepo.findAllById(dto.tourIds());
+            entityToUpdate.setTours(newTours);
+        }
+    }
 }
