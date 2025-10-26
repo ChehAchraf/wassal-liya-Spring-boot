@@ -8,5 +8,6 @@ public record TourDTO(
         LocalDate date,
         Double totalDistance,
         List<Long> deliveryIds,
-        Long vehicaleId
+        Long vehicaleId,
+        Long warehouseId
 ) {}

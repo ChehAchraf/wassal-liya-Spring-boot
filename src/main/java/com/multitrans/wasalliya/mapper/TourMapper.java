@@ -4,8 +4,10 @@ import com.multitrans.wasalliya.dto.TourDTO;
 import com.multitrans.wasalliya.model.Delivery;
 import com.multitrans.wasalliya.model.Tour;
 import com.multitrans.wasalliya.model.Vehicale;
+import com.multitrans.wasalliya.model.Warehouse;
 import com.multitrans.wasalliya.repository.DeliveryRepository;
 import com.multitrans.wasalliya.repository.VehicaleRepository;
+import com.multitrans.wasalliya.repository.WarehouseRepository;
 import lombok.Data;
 
 import java.util.Collections;
@@ -17,10 +19,12 @@ public class TourMapper {
 
     private final VehicaleRepository vehicaleRepo;
     private final DeliveryRepository deliveryRepo;
+    private final WarehouseRepository warehouseRepo;
 
-    public TourMapper(VehicaleRepository vehicaleRepo, DeliveryRepository deliveryRepository) {
+    public TourMapper(VehicaleRepository vehicaleRepo, DeliveryRepository deliveryRepository, WarehouseRepository warehouseRepository) {
         this.vehicaleRepo = vehicaleRepo;
         this.deliveryRepo = deliveryRepository;
+        this.warehouseRepo = warehouseRepository;
     }
 
     public TourDTO toDTO(Tour tour) {
@@ -29,6 +33,7 @@ public class TourMapper {
         }
 
         Long vehicaleId = tour.getVehicale() != null ? tour.getVehicale().getId() : null;
+        Long warehouseId = tour.getWarehouse() != null ? tour.getWarehouse().getId() : null;
         
         List<Long> deliveryIds = tour.getDeliveries() != null && !tour.getDeliveries().isEmpty()
                 ? tour.getDeliveries().stream()
@@ -41,7 +46,8 @@ public class TourMapper {
                 tour.getDate(),
                 tour.getTotalDistance(),
                 deliveryIds,
-                vehicaleId
+                vehicaleId,
+                warehouseId
         );
     }
 
@@ -59,6 +65,13 @@ public class TourMapper {
             Vehicale vehicale = vehicaleRepo.findById(dto.vehicaleId())
                     .orElseThrow(() -> new RuntimeException("Vehicale not found with id: " + dto.vehicaleId()));
             tour.setVehicale(vehicale);
+        }
+
+        // Fetch and set Warehouse entity
+        if (dto.warehouseId() != null) {
+            Warehouse warehouse = warehouseRepo.findById(dto.warehouseId())
+                    .orElseThrow(() -> new RuntimeException("Warehouse not found with id: " + dto.warehouseId()));
+            tour.setWarehouse(warehouse);
         }
 
         // Fetch and set Delivery entities

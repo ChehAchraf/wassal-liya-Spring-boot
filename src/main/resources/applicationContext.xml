@@ -46,9 +46,28 @@
     </bean>
     <!-- end Delivery Configuration -->
 
+    <!-- start warehouse config -->
+    <bean id="warehouseservice" class="com.multitrans.wasalliya.service.WarehouseService">
+        <constructor-arg ref="warehouseRepository" />
+        <constructor-arg ref="warehouseMapper" />
+    </bean>
+
+    <bean id="warehouseController" class="com.multitrans.wasalliya.controller.WarehouseController">
+        <constructor-arg ref="warehouseservice" />
+        <constructor-arg ref="warehouseMapper" />
+    </bean>
+    <!-- end warehouse config -->
+
     <!-- mapper config -->
-    <bean id="tourMapper" class="com.multitrans.wasalliya.mapper.TourMapper" />
+    <bean id="tourMapper" class="com.multitrans.wasalliya.mapper.TourMapper">
+        <constructor-arg ref="vehicaleRepository" />
+        <constructor-arg ref="deliveryRepository" />
+        <constructor-arg ref="warehouseRepository" />
+    </bean>
     <bean id="deliveryMapper" class="com.multitrans.wasalliya.mapper.DeliveryMapper" />
+    <bean id="warehouseMapper" class="com.multitrans.wasalliya.mapper.WarehouseMapper">
+        <constructor-arg ref="tourRepository" />
+    </bean>
 
 
 
