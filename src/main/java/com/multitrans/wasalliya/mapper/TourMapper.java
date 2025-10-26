@@ -28,26 +28,21 @@ public class TourMapper {
             return null;
         }
 
-        TourDTO dto = new TourDTO();
-        dto.setId(tour.getId());
-        dto.setDate(tour.getDate());
-        dto.setTotalDistance(tour.getTotalDistance());
+        Long vehicaleId = tour.getVehicale() != null ? tour.getVehicale().getId() : null;
+        
+        List<Long> deliveryIds = tour.getDeliveries() != null && !tour.getDeliveries().isEmpty()
+                ? tour.getDeliveries().stream()
+                        .map(Delivery::getId)
+                        .collect(Collectors.toList())
+                : Collections.emptyList();
 
-        if (tour.getVehicale() != null) {
-            dto.setVehicaleId(tour.getVehicale().getId());
-        } else {
-            dto.setVehicaleId(null);
-        }
-        if (tour.getDeliveries() != null && !tour.getDeliveries().isEmpty()) {
-            List<Long> ids = tour.getDeliveries().stream()
-                    .map(Delivery::getId)
-                    .collect(Collectors.toList());
-            dto.setDeliveryIds(ids);
-        } else {
-            dto.setDeliveryIds(Collections.emptyList());
-        }
-
-        return dto;
+        return new TourDTO(
+                tour.getId(),
+                tour.getDate(),
+                tour.getTotalDistance(),
+                deliveryIds,
+                vehicaleId
+        );
     }
 
     public Tour toEntity(TourDTO dto) {
@@ -55,20 +50,20 @@ public class TourMapper {
 
         Tour tour = new Tour();
 
-        // 6. كنكوبيو الحقول البسيطة
-        tour.setDate(dto.getDate());
-        tour.setTotalDistance(dto.getTotalDistance());
+        // Map simple fields
+        tour.setDate(dto.date());
+        tour.setTotalDistance(dto.totalDistance());
 
-
-        // 7. كنجيبو الفيهيكل الحقيقي من الباز دو دوني
-        if (dto.getVehicaleId() != null) {
-            Vehicale vehicale = vehicaleRepo.findById(dto.getVehicaleId())
-                    .orElseThrow(() -> new RuntimeException("Vehicale not found with id: " + dto.getVehicaleId()));
+        // Fetch and set Vehicale entity
+        if (dto.vehicaleId() != null) {
+            Vehicale vehicale = vehicaleRepo.findById(dto.vehicaleId())
+                    .orElseThrow(() -> new RuntimeException("Vehicale not found with id: " + dto.vehicaleId()));
             tour.setVehicale(vehicale);
         }
 
-        if (dto.getDeliveryIds() != null && !dto.getDeliveryIds().isEmpty()) {
-            List<Delivery> deliveries = deliveryRepo.findAllById(dto.getDeliveryIds());
+        // Fetch and set Delivery entities
+        if (dto.deliveryIds() != null && !dto.deliveryIds().isEmpty()) {
+            List<Delivery> deliveries = deliveryRepo.findAllById(dto.deliveryIds());
             tour.setDeliveries(deliveries);
         }
 
