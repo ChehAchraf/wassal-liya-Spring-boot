@@ -3,6 +3,7 @@ package com.multitrans.wasalliya.model;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -34,5 +35,6 @@ public class Tour {
 
     @ManyToOne
     @JoinColumn(name = "vehicale_id")
+    @JsonManagedReference
     private Vehicale vehicale;
 }

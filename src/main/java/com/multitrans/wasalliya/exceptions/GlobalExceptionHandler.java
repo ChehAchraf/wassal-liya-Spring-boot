@@ -2,6 +2,7 @@ package com.multitrans.wasalliya.exceptions;
 
 import java.util.NoSuchElementException;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -18,6 +19,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<String> handleNotFount(NoSuchElementException ex){
         return ResponseEntity.badRequest().body("The record you are trying to reach is not found");
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<String> handleDataIntegrity(DataIntegrityViolationException ex){
+        return ResponseEntity.badRequest().body("All the fields are required brother.");
     }
 
 }

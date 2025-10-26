@@ -3,23 +3,31 @@ package com.multitrans.wasalliya.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.multitrans.wasalliya.dto.TourDTO;
+import com.multitrans.wasalliya.mapper.TourMapper;
 import com.multitrans.wasalliya.model.Tour;
 import com.multitrans.wasalliya.repository.TourRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 public class TourService {
 
     private final TourRepository tourRepo;
+    private final TourMapper tourmapper;
 
-    public TourService(TourRepository tourRepository){
+    public TourService(TourRepository tourRepository, TourMapper topurmapper){
         this.tourRepo = tourRepository;
+        this.tourmapper = topurmapper;
     }
 
+    @Transactional
     public List<Tour> getAllTour(){
         return tourRepo.findAll();
     }
 
-    public Tour saveTour(Tour tour){
-        return tourRepo.save(tour);
+    public TourDTO saveTour(TourDTO dto){
+        Tour tourToSave = tourmapper.toEntity(dto);
+        Tour savedTour = tourRepo.save(tourToSave);
+        return tourmapper.toDTO(savedTour);
     }
 
     public Optional<Tour> findTourById(Long tourId){

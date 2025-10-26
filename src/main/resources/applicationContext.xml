@@ -10,18 +10,46 @@
     <!-- JPA repositories -->
     <jpa:repositories base-package="com.multitrans.wasalliya.repository" />
 
-    <!-- Service -->
+    <!-- tour configuration -->
     <bean id="tourService" class="com.multitrans.wasalliya.service.TourService">
         <constructor-arg ref="tourRepository" />
+        <constructor-arg ref="tourMapper" />
     </bean>
 
-    <!-- ObjectMapper -->
-    <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper" />
-
-    <!-- Controller -->
     <bean id="tourController" class="com.multitrans.wasalliya.controller.TourController">
         <constructor-arg ref="tourService" />
-        <constructor-arg ref="objectMapper" />
+        <constructor-arg ref="tourMapper" />
     </bean>
+    <!-- end tour configuration  -->
+
+    <!-- Vehicale Configuration -->
+    <bean id="vehicalmapper" class="com.multitrans.wasalliya.mapper.VehicaleMapper">
+      <constructor-arg ref="tourRepository"/>
+    </bean>
+    <bean id="vehicaleService" class="com.multitrans.wasalliya.service.VehicaleService">
+        <constructor-arg ref="vehicaleRepository" />
+        <constructor-arg ref="vehicalmapper" />
+    </bean>
+    <bean id="vehicaleController" class="com.multitrans.wasalliya.controller.VehicaleController">
+        <constructor-arg ref="vehicaleService" />
+        <constructor-arg ref="vehicalmapper" />
+    </bean>
+    <!--end  Vehicale Configuration -->
+
+    <!-- start Delivery Configuration -->
+    <bean id="deliveryController" class="com.multitrans.wasalliya.controller.DeliveryController">
+        <constructor-arg ref="deliveryService" />
+    </bean>
+    <bean id="deliveryService" class="com.multitrans.wasalliya.service.DeliveryService">
+        <constructor-arg ref="deliveryRepository" />
+        <constructor-arg ref="deliveryMapper" />
+    </bean>
+    <!-- end Delivery Configuration -->
+
+    <!-- mapper config -->
+    <bean id="tourMapper" class="com.multitrans.wasalliya.mapper.TourMapper" />
+    <bean id="deliveryMapper" class="com.multitrans.wasalliya.mapper.DeliveryMapper" />
+
+
 
 </beans>

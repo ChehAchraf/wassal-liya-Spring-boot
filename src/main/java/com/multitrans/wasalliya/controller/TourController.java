@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import com.multitrans.wasalliya.dto.TourDTO;
+import com.multitrans.wasalliya.mapper.TourMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,10 +32,12 @@ public class TourController {
 
     private final TourService tourSer;
     private final ObjectMapper objectmap;
+    private final TourMapper tourMapper;
 
-    public TourController(TourService tourservice, ObjectMapper objectmapper) {
+    public TourController(TourService tourservice, ObjectMapper objectmapper, TourMapper tourMapper) {
         this.tourSer = tourservice;
         this.objectmap = objectmapper;
+        this.tourMapper = tourMapper;
     }
 
     // get all tours
@@ -45,8 +49,9 @@ public class TourController {
 
     // save a tour 
     @PostMapping
-    public Tour save(@RequestBody Tour tour) {
-        return tourSer.saveTour(tour);
+    public ResponseEntity<TourDTO> save(@RequestBody TourDTO tourDTO) {
+        var savedTour =  tourSer.saveTour(tourDTO);
+        return ResponseEntity.ok(savedTour);
     }
 
     // find tour by id 
@@ -73,18 +78,18 @@ public class TourController {
         return ResponseEntity.ok(updatedTour.get());
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<?> edit(@PathVariable Long id, @RequestBody Map<String, Object> updates) throws JsonMappingException {
-        Optional<Tour> existingTourOpt = tourSer.findTourById(id);
-
-
-        Tour existingTour = existingTourOpt.get();
-
-        
-        objectmap.updateValue(existingTour, updates);
-
-        tourSer.saveTour(existingTour);
-        return ResponseEntity.ok(existingTour);
-    }
+//    @PatchMapping("/{id}")
+//    public ResponseEntity<?> edit(@PathVariable Long id, @RequestBody Map<String, Object> updates) throws JsonMappingException {
+//        Optional<Tour> existingTourOpt = tourSer.findTourById(id);
+//
+//
+//        Tour existingTour = existingTourOpt.get();
+//
+//
+//        objectmap.updateValue(existingTour, updates);
+//
+//        tourSer.saveTour(existingTour);
+//        return ResponseEntity.ok(existingTour);
+//    }
 
 }

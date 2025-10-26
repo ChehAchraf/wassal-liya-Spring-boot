@@ -1,6 +1,10 @@
 package com.multitrans.wasalliya.dto;
 
 import java.time.LocalDate;
+import java.util.List;
+
+import com.multitrans.wasalliya.model.Delivery;
+import com.multitrans.wasalliya.model.Vehicale;
 
 import lombok.Data;
 
@@ -10,11 +14,7 @@ public class TourDTO {
     private Long id;
     private LocalDate date;
     private Double totalDistance;
-
-    private int deliveryCount;
-
+    private List<Long> deliveryIds;
     private Long vehicaleId;
-    private String vehicaleName;
-
 
 }

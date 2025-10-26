@@ -2,6 +2,8 @@ package com.multitrans.wasalliya.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.multitrans.wasalliya.enums.VehicalType;
 
 import jakarta.persistence.CascadeType;
@@ -15,6 +17,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -29,6 +32,7 @@ public class Vehicale {
     private Long id;
 
     @Enumerated(EnumType.STRING)
+    @NotNull(message = "Vehicle type is required")
     @Column( name ="vehical_type" ,  nullable = false )
     private VehicalType vehicalType;
 
@@ -41,6 +45,7 @@ public class Vehicale {
     @Column( name = "max_deliveries" , nullable= false )
     private int maxDeliveries;
 
-    @OneToMany(mappedBy = "vehicale", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "vehicale", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonBackReference
     private List<Tour> tours;
 }
