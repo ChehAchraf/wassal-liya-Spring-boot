@@ -7,7 +7,10 @@ import com.multitrans.wasalliya.dto.TourDTO;
 import com.multitrans.wasalliya.mapper.TourMapper;
 import com.multitrans.wasalliya.model.Tour;
 import com.multitrans.wasalliya.optimizer.TourOptimizer;
+import com.multitrans.wasalliya.repository.DeliveryRepository;
 import com.multitrans.wasalliya.repository.TourRepository;
+import com.multitrans.wasalliya.repository.VehicaleRepository;
+import com.multitrans.wasalliya.repository.WarehouseRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 public class TourService {
@@ -15,11 +18,17 @@ public class TourService {
     private final TourRepository tourRepo;
     private final TourMapper tourmapper;
     private final TourOptimizer tourOptimizer;
+    private final DeliveryRepository deliveryRepo;
+    private final VehicaleRepository vehicaleRepo;
+    private final WarehouseRepository warehouseRepo;
 
-    public TourService(TourRepository tourRepository, TourMapper topurmapper,TourOptimizer tourOptimizer){
+    public TourService(TourRepository tourRepository, TourMapper topurmapper, TourOptimizer tourOptimizer, DeliveryRepository deliveryRepo, VehicaleRepository vehicaleRepo, WarehouseRepository warehouseRepo){
         this.tourRepo = tourRepository;
         this.tourmapper = topurmapper;
         this.tourOptimizer = tourOptimizer;
+        this.deliveryRepo = deliveryRepo;
+        this.vehicaleRepo = vehicaleRepo;
+        this.warehouseRepo = warehouseRepo;
     }
 
     @Transactional
