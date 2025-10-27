@@ -9,11 +9,15 @@
 
     <!-- JPA repositories -->
     <jpa:repositories base-package="com.multitrans.wasalliya.repository" />
+    <bean id="nearestNeighbor"
+          class="com.multitrans.wasalliya.optimizer.NearestNeighbor" />
 
+    <bean id="clarkeWright" class="com.multitrans.wasalliya.optimizer.ClarkeWright" />
     <!-- tour configuration -->
     <bean id="tourService" class="com.multitrans.wasalliya.service.TourService">
         <constructor-arg ref="tourRepository" />
         <constructor-arg ref="tourMapper" />
+        <constructor-arg ref="clarkeWright" />
     </bean>
 
     <bean id="tourController" class="com.multitrans.wasalliya.controller.TourController">

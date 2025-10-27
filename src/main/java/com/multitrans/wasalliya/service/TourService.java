@@ -6,6 +6,7 @@ import java.util.Optional;
 import com.multitrans.wasalliya.dto.TourDTO;
 import com.multitrans.wasalliya.mapper.TourMapper;
 import com.multitrans.wasalliya.model.Tour;
+import com.multitrans.wasalliya.optimizer.TourOptimizer;
 import com.multitrans.wasalliya.repository.TourRepository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,10 +14,12 @@ public class TourService {
 
     private final TourRepository tourRepo;
     private final TourMapper tourmapper;
+    private final TourOptimizer tourOptimizer;
 
-    public TourService(TourRepository tourRepository, TourMapper topurmapper){
+    public TourService(TourRepository tourRepository, TourMapper topurmapper,TourOptimizer tourOptimizer){
         this.tourRepo = tourRepository;
         this.tourmapper = topurmapper;
+        this.tourOptimizer = tourOptimizer;
     }
 
     @Transactional

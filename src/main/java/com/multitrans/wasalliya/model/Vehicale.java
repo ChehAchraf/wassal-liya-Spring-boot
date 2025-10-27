@@ -19,11 +19,14 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table( name = "vehicales" )
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class Vehicale {
 
@@ -45,7 +48,7 @@ public class Vehicale {
     @Column( name = "max_deliveries" , nullable= false )
     private int maxDeliveries;
 
-    @OneToMany(mappedBy = "vehicale", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "vehicale", fetch = FetchType.LAZY)
     @JsonBackReference
     private List<Tour> tours;
 }

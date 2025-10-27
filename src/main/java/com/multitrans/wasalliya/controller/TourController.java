@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import com.multitrans.wasalliya.dto.TourDTO;
 import com.multitrans.wasalliya.mapper.TourMapper;
+import com.multitrans.wasalliya.optimizer.TourOptimizer;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +34,7 @@ public class TourController {
     private final TourService tourSer;
     private final ObjectMapper objectmap;
     private final TourMapper tourMapper;
+
 
     public TourController(TourService tourservice, ObjectMapper objectmapper, TourMapper tourMapper) {
         this.tourSer = tourservice;
