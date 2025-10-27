@@ -5,9 +5,7 @@ import com.multitrans.wasalliya.model.Vehicale;
 import com.multitrans.wasalliya.model.Warehouse;
 import com.multitrans.wasalliya.util.DistanceCalculator;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class ClarkeWright implements TourOptimizer{
     @Override
@@ -36,12 +34,66 @@ public class ClarkeWright implements TourOptimizer{
         }
 
         Collections.sort(savingsList);
-        System.out.println("--- Savings List (Sorted) ---");
-        for (Saving s : savingsList) {
-            System.out.printf("Saving ( %d, %d ) = %.2f km\n",
-                    s.deliveryA().getId(), s.deliveryB().getId(), s.savingAmount());
+
+        Map<Delivery, CWRoute> routeMap = new HashMap<>();
+
+        for (Delivery delivery : pendingDeliveries) {
+            routeMap.put(delivery, new CWRoute(delivery));
         }
 
-        return new ArrayList<>();
+        for (Saving saving : savingsList) {
+            Delivery deliveryA = saving.deliveryA();
+            Delivery deliveryB = saving.deliveryB();
+
+            CWRoute routeA = routeMap.get(deliveryA);
+            CWRoute routeB = routeMap.get(deliveryB);
+
+
+            if (routeA == routeB) {
+                continue;
+            }
+
+            if (!routeA.canMergeWith(routeB, vehicle)) {
+                continue;
+            }
+
+            boolean merged = false;
+
+            if (routeA.getEnd() == deliveryA && routeB.getStart() == deliveryB) {
+                routeA.merge(routeB);
+                merged = true;
+            } else if (routeA.getStart() == deliveryA && routeB.getEnd() == deliveryB) {
+                routeB.merge(routeA);
+                routeMap.put(deliveryA, routeB);
+                routeA = routeB;
+                merged = true;
+            } else if (routeA.getStart() == deliveryA && routeB.getStart() == deliveryB) {
+                routeA.reverse();
+                routeA.merge(routeB);
+                merged = true;
+            } else if (routeA.getEnd() == deliveryA && routeB.getEnd() == deliveryB) {
+                routeB.reverse();
+                routeA.merge(routeB);
+                merged = true;
+            }
+
+            if (merged) {
+                for (Delivery deliveryInMergedRoute : routeB.getDeliveries()) {
+                    routeMap.put(deliveryInMergedRoute, routeA);
+                }
+            }
+        }
+
+        Set<CWRoute> finalRoutes = new HashSet<>(routeMap.values());
+
+        CWRoute bestRoute = finalRoutes.stream()
+                .max(Comparator.comparing(CWRoute::getDeliveryCount))
+                .orElse(null);
+
+        if (bestRoute != null) {
+            return bestRoute.getDeliveries();
+        } else {
+            return new ArrayList<>();
+        }
     }
 }
