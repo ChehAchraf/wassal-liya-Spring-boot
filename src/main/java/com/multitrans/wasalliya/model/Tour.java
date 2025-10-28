@@ -31,6 +31,7 @@ public class Tour {
     private Double totalDistance;
     
     @OneToMany( mappedBy="tour" , cascade= CascadeType.ALL , orphanRemoval=true )
+    @JsonManagedReference
     private List<Delivery> deliveries;
 
     @ManyToOne

@@ -1,13 +1,12 @@
 package com.multitrans.wasalliya.service;
 
 
-import com.multitrans.wasalliya.dto.WarehouseDTO;
-import com.multitrans.wasalliya.mapper.WarehouseMapper;
+import com.multitrans.wasalliya.model.dto.WarehouseDTO;
+import com.multitrans.wasalliya.model.mapper.WarehouseMapper;
 import com.multitrans.wasalliya.model.Warehouse;
 import com.multitrans.wasalliya.repository.WarehouseRepository;
 import jakarta.transaction.Transactional;
 
-import java.util.List;
 import java.util.NoSuchElementException;
 
 public class WarehouseService {

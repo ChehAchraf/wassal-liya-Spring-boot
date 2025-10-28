@@ -1,7 +1,7 @@
 package com.multitrans.wasalliya.service;
 
-import com.multitrans.wasalliya.dto.DeliveryDTO;
-import com.multitrans.wasalliya.mapper.DeliveryMapper;
+import com.multitrans.wasalliya.model.dto.DeliveryDTO;
+import com.multitrans.wasalliya.model.mapper.DeliveryMapper;
 import com.multitrans.wasalliya.model.Delivery;
 import com.multitrans.wasalliya.repository.DeliveryRepository;
 

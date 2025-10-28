@@ -1,6 +1,6 @@
-package com.multitrans.wasalliya.mapper;
+package com.multitrans.wasalliya.model.mapper;
 
-import com.multitrans.wasalliya.dto.WarehouseDTO;
+import com.multitrans.wasalliya.model.dto.WarehouseDTO;
 import com.multitrans.wasalliya.model.Tour;
 import com.multitrans.wasalliya.model.Warehouse;
 import com.multitrans.wasalliya.repository.TourRepository;

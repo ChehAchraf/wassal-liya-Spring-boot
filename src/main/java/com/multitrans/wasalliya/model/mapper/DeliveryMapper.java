@@ -1,11 +1,10 @@
-package com.multitrans.wasalliya.mapper;
+package com.multitrans.wasalliya.model.mapper;
 
-import com.multitrans.wasalliya.dto.DeliveryDTO;
+import com.multitrans.wasalliya.model.dto.DeliveryDTO;
 import com.multitrans.wasalliya.model.Delivery;
 import com.multitrans.wasalliya.model.Tour;
 import com.multitrans.wasalliya.repository.TourRepository;
 
-import java.util.Collections;
 import java.util.NoSuchElementException;
 
 public class DeliveryMapper {

@@ -1,6 +1,7 @@
 package com.multitrans.wasalliya.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.multitrans.wasalliya.enums.DeliveryStatus;
 
 import jakarta.persistence.Column;
@@ -60,6 +61,7 @@ public class Delivery {
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="tour_id")    
+    @JoinColumn(name="tour_id")
+    @JsonBackReference
     private Tour tour;
 }

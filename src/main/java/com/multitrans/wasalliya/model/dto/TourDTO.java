@@ -1,4 +1,4 @@
-package com.multitrans.wasalliya.dto;
+package com.multitrans.wasalliya.model.dto;
 
 import java.time.LocalDate;
 import java.util.List;

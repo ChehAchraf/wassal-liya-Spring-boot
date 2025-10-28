@@ -1,49 +1,60 @@
 package com.multitrans.wasalliya.controller;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
-import com.multitrans.wasalliya.dto.TourDTO;
-import com.multitrans.wasalliya.mapper.TourMapper;
-import com.multitrans.wasalliya.optimizer.TourOptimizer;
+import com.multitrans.wasalliya.model.dto.TourDTO;
+import com.multitrans.wasalliya.model.mapper.TourMapper;
+import com.multitrans.wasalliya.model.Delivery;
+import com.multitrans.wasalliya.model.Warehouse;
+import com.multitrans.wasalliya.repository.WarehouseRepository;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.multitrans.wasalliya.model.Tour;
 import com.multitrans.wasalliya.service.TourService;
 
 import io.swagger.v3.oas.annotations.Operation;
 
-import org.springframework.web.bind.annotation.PutMapping;
-
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
-@RequestMapping("/tour")
+@RequestMapping("/tours")
 public class TourController {
 
     private final TourService tourSer;
     private final ObjectMapper objectmap;
     private final TourMapper tourMapper;
+    private final WarehouseRepository warehouseRepo;
 
 
-    public TourController(TourService tourservice, ObjectMapper objectmapper, TourMapper tourMapper) {
+    public TourController(TourService tourservice, ObjectMapper objectmapper, TourMapper tourMapper, WarehouseRepository warehouseRepo) {
         this.tourSer = tourservice;
         this.objectmap = objectmapper;
         this.tourMapper = tourMapper;
+        this.warehouseRepo = warehouseRepo;
+    }
+
+    @Operation(summary = "Calculate and get the optimized tour",
+            description = "Runs the Optimizer and returns the ordered list of deliveries and total distance.")
+    @PostMapping("/optimize")
+    public ResponseEntity<?> getOptimizedTour(@RequestParam Long warehouseId, @RequestParam Long vehicaleId) {
+        List<Delivery> optimizedList = tourSer.getOptimizedTour(warehouseId, vehicaleId);
+
+        Warehouse warehouse = warehouseRepo.findById(warehouseId)
+                .orElseThrow(NoSuchElementException::new);
+
+        double totalDistance = tourSer.getTotalDistance(warehouse, optimizedList);
+        Map<String, Object> response = new HashMap<>();
+        response.put("algorithmUsed", tourSer.getOptimizerName());
+        response.put("totalDistanceKm", totalDistance);
+        response.put("deliveryCount", optimizedList.size());
+        response.put("orderedDeliveries", optimizedList);
+
+        return ResponseEntity.ok(response);
     }
 
     // get all tours
-    @GetMapping("/")
+    @GetMapping("")
     @Operation(summary = "get all tours", description = "get all the the tours")
     public List<Tour> index() {
         return tourSer.getAllTour();

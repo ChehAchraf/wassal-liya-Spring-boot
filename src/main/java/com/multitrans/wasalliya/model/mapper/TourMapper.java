@@ -1,6 +1,6 @@
-package com.multitrans.wasalliya.mapper;
+package com.multitrans.wasalliya.model.mapper;
 
-import com.multitrans.wasalliya.dto.TourDTO;
+import com.multitrans.wasalliya.model.dto.TourDTO;
 import com.multitrans.wasalliya.model.Delivery;
 import com.multitrans.wasalliya.model.Tour;
 import com.multitrans.wasalliya.model.Vehicale;
@@ -82,5 +82,7 @@ public class TourMapper {
 
         return tour;
     }
+
+
 
 }

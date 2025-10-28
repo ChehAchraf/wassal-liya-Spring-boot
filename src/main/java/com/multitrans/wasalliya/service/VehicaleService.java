@@ -1,13 +1,14 @@
 package com.multitrans.wasalliya.service;
 
-import com.multitrans.wasalliya.dto.VehicalDTO;
-import com.multitrans.wasalliya.mapper.VehicaleMapper;
+import com.multitrans.wasalliya.enums.VehicalType;
+import com.multitrans.wasalliya.model.dto.VehicalDTO;
+import com.multitrans.wasalliya.model.mapper.VehicaleMapper;
 import com.multitrans.wasalliya.model.Vehicale;
 import com.multitrans.wasalliya.repository.VehicaleRepository;
 
 import jakarta.transaction.Transactional;
 
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class VehicaleService {
     
@@ -32,13 +33,19 @@ public class VehicaleService {
         return vmapper.toDTO(vehicale);
     }
 
-        @Transactional
-        public VehicalDTO updateVehicla(Long id, VehicalDTO dto){
+    @Transactional
+    public VehicalDTO updateVehicla(Long id, VehicalDTO dto){
             Vehicale vehicaleToUpdate = vehicaleRepo.findById(id)
                     .orElseThrow(()-> new RuntimeException("Vehiclae with this id :"+id+" is not found" ));
             vmapper.updateFromDto(dto,vehicaleToUpdate);
             Vehicale updatedVehicale = vehicaleRepo.save(vehicaleToUpdate);
             return vmapper.toDTO(updatedVehicale);
         }
+
+    public Long CountVehical(String type){
+        VehicalType enumType = VehicalType.valueOf(type.toUpperCase());
+        return vehicaleRepo.countVehicaleByVehicalType(enumType);
+
+    }
 
 }
