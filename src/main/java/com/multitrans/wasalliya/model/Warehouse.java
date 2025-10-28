@@ -1,17 +1,13 @@
 package com.multitrans.wasalliya.model;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.Data;
+
+import java.util.List;
 
 @Entity
 @Table(name="warehouses")
+@Data
 public class Warehouse {
 
     @Id
@@ -27,8 +23,7 @@ public class Warehouse {
     @Column(name="opening_hours" , nullable=false)
     private String openingHours;
 
-    @OneToOne(cascade=CascadeType.ALL, orphanRemoval=true)
-    @JoinColumn(name = "tour_id")
-    private Tour tour;
+    @OneToMany(mappedBy = "warehouse")
+    private List<Tour> tours;
 
 }

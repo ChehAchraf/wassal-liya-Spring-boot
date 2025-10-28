@@ -31,10 +31,15 @@ public class Tour {
     private Double totalDistance;
     
     @OneToMany( mappedBy="tour" , cascade= CascadeType.ALL , orphanRemoval=true )
+    @JsonManagedReference
     private List<Delivery> deliveries;
 
     @ManyToOne
     @JoinColumn(name = "vehicale_id")
     @JsonManagedReference
     private Vehicale vehicale;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "warehouse_id", nullable = false)
+    private Warehouse warehouse;
 }
