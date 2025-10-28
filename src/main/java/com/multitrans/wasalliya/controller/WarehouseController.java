@@ -3,6 +3,7 @@ package com.multitrans.wasalliya.controller;
 import com.multitrans.wasalliya.model.dto.WarehouseDTO;
 import com.multitrans.wasalliya.model.mapper.WarehouseMapper;
 import com.multitrans.wasalliya.service.WarehouseService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,8 +18,8 @@ public class WarehouseController {
         this.wMapper = warehouseMapper;
     }
 
-    @PostMapping("/")
-    public ResponseEntity<WarehouseDTO> save(@RequestBody WarehouseDTO dto){
+    @PostMapping("")
+    public ResponseEntity<WarehouseDTO> save(@Valid @RequestBody WarehouseDTO dto){
         return ResponseEntity.ok(warehouseSer.createWarehouse(dto));
     }
 

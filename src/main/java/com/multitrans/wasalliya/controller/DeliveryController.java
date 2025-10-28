@@ -2,6 +2,7 @@ package com.multitrans.wasalliya.controller;
 
 import com.multitrans.wasalliya.model.dto.DeliveryDTO;
 import com.multitrans.wasalliya.service.DeliveryService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +23,7 @@ public class DeliveryController {
     }
 
     @PostMapping("")
-    public ResponseEntity<DeliveryDTO> create(@RequestBody DeliveryDTO dto){
+    public ResponseEntity<DeliveryDTO> create(@Valid @RequestBody DeliveryDTO dto){
         return  ResponseEntity.ok(deliverySer.createDelivery(dto));
     }
 
