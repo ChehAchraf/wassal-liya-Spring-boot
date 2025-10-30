@@ -27,6 +27,7 @@
         <constructor-arg ref="deliveryRepository" />
         <constructor-arg ref="vehicaleRepository" />
         <constructor-arg ref="warehouseRepository" />
+        <constructor-arg ref="loggingService" />
     </bean>
 
     <bean id="tourController" class="com.multitrans.wasalliya.controller.TourController">
