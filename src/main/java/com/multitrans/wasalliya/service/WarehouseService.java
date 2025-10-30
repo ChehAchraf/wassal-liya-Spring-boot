@@ -32,7 +32,7 @@ public class WarehouseService {
 
     @Transactional
     public WarehouseDTO findWarehouseById(Long id) {
-
+        logger.logInfo("Attempt to find a ware house");
         Warehouse foundedWarehouse = warehouseRepo.findById(id).orElseThrow(NoSuchElementException::new);
         return wMapper.toDTO(foundedWarehouse);
     }
