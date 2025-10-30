@@ -45,6 +45,7 @@
     <bean id="vehicaleService" class="com.multitrans.wasalliya.service.VehicaleService">
         <constructor-arg ref="vehicaleRepository" />
         <constructor-arg ref="vehicalmapper" />
+        <constructor-arg ref="loggingService" />
     </bean>
     <bean id="vehicaleController" class="com.multitrans.wasalliya.controller.VehicaleController">
         <constructor-arg ref="vehicaleService" />

@@ -11,9 +11,9 @@ public class LoggingService {
         logger.info("[Custom Info] : " + message);
     }
 
-    public void logError(String message, Throwable error){
-        logger.error("[Custom Error] : " + message , error);
-    }
+//    public void logError(String message, Throwable error){
+//        logger.error("[Custom Error] : " + message , error);
+//    }
 
     public void logWarning(String message){
         logger.warn("[Custom Warning] : " + message);
