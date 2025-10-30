@@ -7,6 +7,12 @@
                            http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
                            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
+
+    <!-- logger class -->
+    <bean id="loggingService"
+          class="com.multitrans.wasalliya.helper.LoggingService">
+    </bean>
+    <!-- end logger class -->
     <!-- JPA repositories -->
     <jpa:repositories base-package="com.multitrans.wasalliya.repository" />
     <bean id="nearestNeighbor"
@@ -60,6 +66,7 @@
     <bean id="warehouseservice" class="com.multitrans.wasalliya.service.WarehouseService">
         <constructor-arg ref="warehouseRepository" />
         <constructor-arg ref="warehouseMapper" />
+        <constructor-arg ref="loggingService" />
     </bean>
 
     <bean id="warehouseController" class="com.multitrans.wasalliya.controller.WarehouseController">
